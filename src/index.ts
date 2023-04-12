@@ -31,11 +31,6 @@ export class Book {
 }
 
 export const BookModel = getModelForClass(Book);
-export interface Book {
-  _id: string;
-  title: string;
-  author: string;
-}
 
 @Resolver(Book)
 class BookResolver {
