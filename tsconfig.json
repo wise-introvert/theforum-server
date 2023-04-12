@@ -1,14 +1,31 @@
 {
   "compilerOptions": {
-    "rootDirs": ["src"],
-    "outDir": "dist",
-    "lib": ["es2020", "esnext.asynciterable"],
-    "target": "es2020",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "commonjs",
     "esModuleInterop": true,
-    "types": ["node"],
+    "allowSyntheticDefaultImports": true,
+    "target": "es2016",
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
+    "declaration": false,
+    "noFallthroughCasesInSwitch": true,
+    "composite": false,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "lib": ["dom", "es2016", "esnext.asynciterable"],
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "strict": false,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
   }
 }

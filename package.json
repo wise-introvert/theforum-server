@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "compile": "tsc",
     "start": "npm run compile && node ./dist/index.js",
@@ -12,16 +11,23 @@
   "dependencies": {
     "@apollo/server": "^4.6.0",
     "@typegoose/typegoose": "^11.0.0",
+    "bcrypt": "^5.1.0",
     "class-validator": "^0.14.0",
     "graphql": "^16.6.0",
     "lodash.get": "^4.4.2",
+    "lodash.isempty": "^4.4.0",
+    "lodash.omit": "^4.5.0",
     "mongoose": "^7.0.3",
     "mongoose-autopopulate": "^1.0.0",
     "reflect-metadata": "^0.1.13",
-    "type-graphql": "2.0.0-beta.1"
+    "type-graphql": "2.0.0-beta.1",
+    "yup": "^1.1.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/lodash.get": "^4.4.7",
+    "@types/lodash.isempty": "^4.4.7",
+    "@types/lodash.omit": "^4.5.7",
     "@types/node": "^18.15.11",
     "nodemon": "^2.0.22",
     "typescript": "^5.0.4"
