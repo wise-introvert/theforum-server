@@ -11,9 +11,14 @@
   },
   "dependencies": {
     "@apollo/server": "^4.6.0",
-    "graphql": "^16.6.0"
+    "@typegoose/typegoose": "^11.0.0",
+    "graphql": "^16.6.0",
+    "lodash.get": "^4.4.2",
+    "mongoose": "^7.0.3",
+    "mongoose-autopopulate": "^1.0.0"
   },
   "devDependencies": {
+    "@types/lodash.get": "^4.4.7",
     "@types/node": "^18.15.11",
     "nodemon": "^2.0.22",
     "typescript": "^5.0.4"
