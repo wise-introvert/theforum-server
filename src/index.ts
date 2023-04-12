@@ -1,9 +1,10 @@
 import "reflect-metadata";
 
+import populate from "mongoose-autopopulate";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import * as mongoose from "mongoose";
-import { prop, getModelForClass } from "@typegoose/typegoose";
+import { Types, connect } from "mongoose";
+import { prop, getModelForClass, Ref, plugin } from "@typegoose/typegoose";
 import {
   Arg,
   ObjectType,
@@ -17,7 +18,31 @@ import {
 import get from "lodash.get";
 
 @ObjectType()
-export class Book {
+class Author {
+  @Field(() => ID)
+  _id: string;
+
+  @Field()
+  @prop()
+  name: string;
+}
+const AuthorModel = getModelForClass(Author);
+@Resolver(Author)
+class AuthorResolver {
+  @Query(() => [Book])
+  async books(@Arg("id", { nullable: false }) id: string) {
+    return AuthorModel.findOne({ _id: id });
+  }
+
+  @Mutation(() => Book)
+  async register(@Arg("name", { nullable: false }) name: string) {
+    return AuthorModel.create({ name, books: [] });
+  }
+}
+
+@ObjectType()
+@plugin(populate)
+class Book {
   @Field(() => ID)
   _id: string;
 
@@ -25,13 +50,11 @@ export class Book {
   @prop()
   title: string;
 
-  @Field()
-  @prop()
-  author: string;
+  @Field(() => Author)
+  @prop({ ref: Author, required: true, autopopulate: true })
+  author: Ref<Author>;
 }
-
-export const BookModel = getModelForClass(Book);
-
+const BookModel = getModelForClass(Book);
 @Resolver(Book)
 class BookResolver {
   @Query(() => [Book])
@@ -42,20 +65,25 @@ class BookResolver {
   @Mutation(() => Book)
   async book(
     @Arg("title", { nullable: false }) title: string,
-    @Arg("author", { nullable: false }) author: string
+    @Arg("author", { nullable: false }) authorID: string
   ) {
-    return BookModel.create({ title, author });
+    const author: Author = await AuthorModel.findOne({
+      _id: new Types.ObjectId(authorID),
+    });
+    return BookModel.create({
+      title,
+      author,
+    });
   }
 }
 
 const schema = await buildSchema({
-  resolvers: [BookResolver],
+  resolvers: [BookResolver, AuthorResolver],
   emitSchemaFile: false,
 });
 const server: ApolloServer = new ApolloServer({ schema });
 
-mongoose
-  .connect(`mongodb://localhost:27017/`, { dbName: "guides" })
+connect(`mongodb://localhost:27017/`, { dbName: "forum" })
   .then(
     (): Promise<{ url: string }> =>
       startStandaloneServer(server, { listen: { port: 4000 } })
