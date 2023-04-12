@@ -11,7 +11,14 @@ export const registrationValidationSchema = yup.object({
     .string()
     .required("Password cannot be empty")
     .min(8, "Password should be atleast 8 characters long.")
-    .max(32, "Password cannot be more than 32 characters long."),
+    .max(32, "Password cannot be more than 32 characters long.")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/\d/, "Password must contain at least one number")
+    .matches(
+      /[!@#]/,
+      "Password must contain at least one of the following special characters: !, @, #"
+    ),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Passwords must match.")
