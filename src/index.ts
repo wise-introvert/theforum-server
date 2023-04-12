@@ -1,46 +1,63 @@
+import "reflect-metadata";
+
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import * as mongoose from "mongoose";
+import { prop, getModelForClass } from "@typegoose/typegoose";
+import {
+  Arg,
+  ObjectType,
+  Mutation,
+  Field,
+  Resolver,
+  Query,
+  buildSchema,
+  ID,
+} from "type-graphql";
 import get from "lodash.get";
 
-const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+@ObjectType()
+export class Book {
+  @Field(() => ID)
+  _id: string;
 
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
+  @Field()
+  @prop()
+  title: string;
+
+  @Field()
+  @prop()
+  author: string;
+}
+
+export const BookModel = getModelForClass(Book);
+export interface Book {
+  _id: string;
+  title: string;
+  author: string;
+}
+
+@Resolver(Book)
+class BookResolver {
+  @Query(() => [Book])
+  async books() {
+    return BookModel.find();
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    books: [Book]
+  @Mutation(() => Book)
+  async book(
+    @Arg("title", { nullable: false }) title: string,
+    @Arg("author", { nullable: false }) author: string
+  ) {
+    return BookModel.create({ title, author });
   }
-`;
+}
 
-const books = [
-  {
-    title: "The Awakening",
-    author: "Kate Chopin",
-  },
-  {
-    title: "City of Glass",
-    author: "Paul Auster",
-  },
-];
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+const schema = await buildSchema({
+  resolvers: [BookResolver],
+  emitSchemaFile: false,
 });
+const server: ApolloServer = new ApolloServer({ schema });
 
 mongoose
   .connect(`mongodb://localhost:27017/`, { dbName: "guides" })

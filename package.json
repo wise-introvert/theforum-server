@@ -12,10 +12,13 @@
   "dependencies": {
     "@apollo/server": "^4.6.0",
     "@typegoose/typegoose": "^11.0.0",
+    "class-validator": "^0.14.0",
     "graphql": "^16.6.0",
     "lodash.get": "^4.4.2",
     "mongoose": "^7.0.3",
-    "mongoose-autopopulate": "^1.0.0"
+    "mongoose-autopopulate": "^1.0.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "2.0.0-beta.1"
   },
   "devDependencies": {
     "@types/lodash.get": "^4.4.7",
