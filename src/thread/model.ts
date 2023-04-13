@@ -4,6 +4,7 @@ import populate from "mongoose-autopopulate";
 
 import { User } from "../user";
 import { Post } from "../post";
+import { Forum } from "../forum";
 
 @ObjectType()
 @plugin(populate)
@@ -22,6 +23,10 @@ export class Thread {
   @Field(() => Post)
   @prop({ ref: () => "Post", autopopulate: true })
   genisis: Ref<Post>;
+
+  @Field(() => Forum)
+  @prop({ ref: () => "Forum", autopopulate: true })
+  forum: Ref<Forum>;
 
   @Field(() => Date)
   createdAt: Date;

@@ -4,6 +4,7 @@ import populate from "mongoose-autopopulate";
 
 import { Forum } from "../forum";
 import { Post } from "../post";
+import { Thread } from "../thread";
 
 @ObjectType()
 @plugin(populate)
@@ -25,15 +26,19 @@ export class User {
 
   @Field(() => [Forum])
   @prop({ default: [], ref: () => Forum, autopopulate: true })
-  forums?: Array<Ref<Forum>>;
+  forums: Array<Ref<Forum>>;
+
+  @Field(() => [Thread])
+  @prop({ default: [], ref: () => Thread, autopopulate: true })
+  threads: Array<Ref<Thread>>;
 
   @Field(() => [Post])
   @prop({ default: [], ref: () => Post, autopopulate: true })
-  posts?: Array<Ref<Post>>;
+  posts: Array<Ref<Post>>;
 
   @Field()
   @prop({ nullable: true })
-  avatar?: string;
+  avatar: string;
 
   @Field(() => Date)
   createdAt: Date;

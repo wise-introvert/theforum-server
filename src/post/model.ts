@@ -22,6 +22,10 @@ export class Post {
   @prop({ ref: () => "User", autopopulate: true })
   author: Ref<User>;
 
+  @Field(() => Boolean)
+  @prop({ default: true })
+  genisis?: boolean;
+
   @Field(() => Date)
   createdAt: Date;
 

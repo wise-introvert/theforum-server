@@ -8,6 +8,9 @@ export const createThreadValidationSchema = yup.object({
     .min(4, "Thread's title should be atleast 4 characters long.")
     .max(18, "Thread's title cannot be more than 18 characters long."),
   author: yup.string().required("author cannot be empty"),
+  forum: yup
+    .string()
+    .required("Thread cannot be created without a parent forum!"),
   genisis: yup
     .string()
     .required("Thread cannot be created without a genisis post!"),
@@ -36,4 +39,7 @@ export class CreateThreadInput {
 
   @Field({ nullable: false })
   genisis!: string;
+
+  @Field({ nullable: false })
+  forum!: string;
 }
