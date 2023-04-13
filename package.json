@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "clean": "yarn rimraf dist",
     "compile": "tsc",
-    "start": "npm run compile && node ./dist/index.js",
+    "start": "yarn clean && yarn compile && node ./dist/index.js",
     "start:dev": "yarn nodemon"
   },
   "dependencies": {
@@ -17,6 +18,7 @@
     "lodash.get": "^4.4.2",
     "lodash.isempty": "^4.4.0",
     "lodash.omit": "^4.5.0",
+    "md5": "^2.3.0",
     "mongoose": "^7.0.3",
     "mongoose-autopopulate": "^1.0.0",
     "reflect-metadata": "^0.1.13",
@@ -28,8 +30,10 @@
     "@types/lodash.get": "^4.4.7",
     "@types/lodash.isempty": "^4.4.7",
     "@types/lodash.omit": "^4.5.7",
+    "@types/md5": "^2.3.2",
     "@types/node": "^18.15.11",
     "nodemon": "^2.0.22",
+    "rimraf": "^5.0.0",
     "typescript": "^5.0.4"
   }
 }
