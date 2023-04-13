@@ -7,6 +7,7 @@ export const createForumValidationSchema = yup.object({
     .required("Forum's title cannot be empty")
     .min(4, "Forum's title should be atleast 4 characters long.")
     .max(18, "Forum's title cannot be more than 18 characters long."),
+  author: yup.string().required("author cannot be empty"),
   description: yup
     .string()
     .optional()
@@ -26,4 +27,7 @@ export class CreateForumInput {
     nullable: true,
   })
   image?: string;
+
+  @Field({ nullable: false })
+  author!: string;
 }

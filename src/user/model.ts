@@ -1,5 +1,7 @@
-import { prop, getModelForClass } from "@typegoose/typegoose";
+import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import { ObjectType, Field, ID } from "type-graphql";
+
+import { Forum } from "../forum";
 
 @ObjectType()
 export class User {
@@ -17,6 +19,18 @@ export class User {
   @Field()
   @prop({ nullable: true, default: "" })
   description: string;
+
+  @Field(() => [Forum])
+  @prop({ default: [], ref: () => Forum })
+  forums?: Array<Ref<Forum>>;
+
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
 }
 
-export const UserModel = getModelForClass(User);
+export const UserModel = getModelForClass(User, {
+  schemaOptions: { timestamps: true },
+});
