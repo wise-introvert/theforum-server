@@ -8,10 +8,11 @@ import get from "lodash.get";
 
 import { UserResolver } from "./user";
 import { ForumResolver } from "./forum";
+import { PostResolver } from "./post";
 
 const main = async () => {
   const schema = await buildSchema({
-    resolvers: [UserResolver, ForumResolver],
+    resolvers: [UserResolver, ForumResolver, PostResolver],
     emitSchemaFile: false,
     validate: false,
   });

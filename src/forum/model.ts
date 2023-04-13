@@ -1,9 +1,11 @@
-import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
+import { prop, getModelForClass, Ref, plugin } from "@typegoose/typegoose";
 import { ObjectType, Field, ID } from "type-graphql";
+import populate from "mongoose-autopopulate";
 
 import { User } from "../user";
 
 @ObjectType()
+@plugin(populate)
 export class Forum {
   @Field(() => ID)
   _id: string;
@@ -21,7 +23,7 @@ export class Forum {
   image?: string;
 
   @Field(() => User)
-  @prop({ ref: () => "User" })
+  @prop({ ref: () => "User", autopopulate: true })
   author: Ref<User>;
 
   @Field(() => Date)
