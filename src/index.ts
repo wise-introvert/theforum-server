@@ -7,10 +7,11 @@ import { buildSchema } from "type-graphql";
 import get from "lodash.get";
 
 import { UserResolver } from "./user";
+import { ForumResolver } from "./forum";
 
 const main = async () => {
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [UserResolver, ForumResolver],
     emitSchemaFile: false,
     validate: false,
   });
