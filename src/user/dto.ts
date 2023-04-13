@@ -28,6 +28,7 @@ export const registrationValidationSchema = yup.object({
     .optional()
     .default("")
     .max(128, "Description cannot be more than 128 characters long."),
+  image: yup.string().nullable().url("Invalid image url."),
 });
 
 @InputType()
@@ -43,6 +44,9 @@ export class UserRegistrationInput {
 
   @Field({ nullable: true })
   description?: string;
+
+  @Field({ nullable: true })
+  avatar?: string;
 }
 
 export const loginValidationSchema = yup.object({

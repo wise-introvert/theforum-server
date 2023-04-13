@@ -3,6 +3,7 @@ import get from "lodash.get";
 import isEmpty from "lodash.isempty";
 import omit from "lodash.omit";
 import { hashSync, genSaltSync, compareSync } from "bcrypt";
+import md5 from "md5";
 
 import {
   User,
@@ -42,6 +43,13 @@ export class UserResolver {
       const createdUser: User = await UserModel.create({
         ...omit(input, "confirmPassword"),
         password: hashed,
+        avatar: get(
+          input,
+          "image",
+          `https://www.gravatar.com/avatar/${md5(
+            `${get(input, "username", "")}@forum.com`
+          )}?s=500&d=retro`
+        ),
       });
 
       return omit(createdUser, "password") as User;

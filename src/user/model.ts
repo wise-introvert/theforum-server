@@ -24,6 +24,10 @@ export class User {
   @prop({ default: [], ref: () => Forum })
   forums?: Array<Ref<Forum>>;
 
+  @Field()
+  @prop({ nullable: true })
+  avatar?: string;
+
   @Field(() => Date)
   createdAt: Date;
 
