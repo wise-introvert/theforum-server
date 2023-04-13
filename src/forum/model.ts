@@ -3,6 +3,7 @@ import { ObjectType, Field, ID } from "type-graphql";
 import populate from "mongoose-autopopulate";
 
 import { User } from "../user";
+import { Post } from "../post";
 
 @ObjectType()
 @plugin(populate)
@@ -25,6 +26,10 @@ export class Forum {
   @Field(() => User)
   @prop({ ref: () => "User", autopopulate: true })
   author: Ref<User>;
+
+  @Field(() => [Post])
+  @prop({ ref: () => "Post", default: [] })
+  posts: Array<Ref<Post>>;
 
   @Field(() => Date)
   createdAt: Date;

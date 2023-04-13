@@ -8,6 +8,7 @@ export const createPostValidationSchema = yup.object({
     .min(4, "Post's title should be atleast 4 characters long.")
     .max(18, "Post's title cannot be more than 18 characters long."),
   author: yup.string().required("author cannot be empty"),
+  forum: yup.string().required("forum cannot be empty"),
   content: yup
     .string()
     .required("Content cannot be empty")
@@ -24,4 +25,7 @@ export class CreatePostInput {
 
   @Field({ nullable: false })
   author!: string;
+
+  @Field({ nullable: false })
+  forum!: string;
 }

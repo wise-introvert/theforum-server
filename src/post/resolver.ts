@@ -10,6 +10,7 @@ import {
   PostModel,
 } from ".";
 import { User, UserModel } from "../user";
+import { Forum, ForumModel } from "../forum";
 
 @Resolver(Post)
 export class PostResolver {
@@ -32,14 +33,25 @@ export class PostResolver {
         throw new Error("Invalid author!");
       }
 
+      const forum: Forum | null = await ForumModel.findOne({
+        _id: new Types.ObjectId(get(input, "forum", "")),
+      });
+
+      if (isEmpty(forum)) {
+        throw new Error("Invalid forum!");
+      }
+
       const post: Post = await PostModel.create({
         ...input,
         author,
+        forum,
       });
 
       author.posts?.push(post._id);
+      forum.posts?.push(post._id);
 
       await UserModel.updateOne({ _id: author._id }, author);
+      await ForumModel.updateOne({ _id: forum._id }, forum);
 
       return post;
     } catch (err) {
