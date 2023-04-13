@@ -39,10 +39,12 @@ export class UserResolver {
       const namak: string = genSaltSync(12);
       const hashed: string = hashSync(get(input, "password", ""), namak);
 
-      return await UserModel.create({
+      const createdUser: User = await UserModel.create({
         ...omit(input, "confirmPassword"),
         password: hashed,
       });
+
+      return omit(createdUser, "password") as User;
     } catch (err) {
       throw new Error(
         get(
@@ -76,7 +78,7 @@ export class UserResolver {
         throw new Error("Invalid username/password");
       }
 
-      return user;
+      return omit(user, "password") as User;
     } catch (err) {
       throw new Error(
         get(
