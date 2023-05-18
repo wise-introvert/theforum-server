@@ -1,35 +1,46 @@
-import { prop, getModelForClass, Ref, plugin } from "@typegoose/typegoose";
+import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import { ObjectType, Field, ID } from "type-graphql";
-import populate from "mongoose-autopopulate";
 
 import { User } from "../user";
+import { Thread } from "../thread";
 
 @ObjectType()
-@plugin(populate)
 export class Post {
   @Field(() => ID)
   _id: string;
 
-  @Field()
-  @prop({ nullable: false /*, unique: true */ })
+  @Field({ nullable: true })
+  @prop({ nullable: true /*, unique: true */ })
   title!: string;
 
-  @Field()
+  @Field({ nullable: true })
   @prop({ nullable: false })
   content!: string;
 
-  @Field(() => User)
-  @prop({ ref: () => "User", autopopulate: true })
+  @Field(() => User, { nullable: true })
+  @prop({ ref: () => "User" })
   author: Ref<User>;
 
-  @Field(() => Boolean)
+  @Field(() => Thread, { nullable: true })
+  @prop({ ref: () => "Thread", nullable: true })
+  thread?: Ref<Thread>;
+
+  @Field(() => Post, { nullable: true })
+  @prop({ ref: () => "Post", nullable: true })
+  parentPost?: Ref<Post>;
+
+  @Field(() => [Post])
+  @prop({ ref: () => "Post" })
+  children: Array<Ref<Post>>;
+
+  @Field(() => Boolean, { nullable: true })
   @prop({ default: true })
   genisis?: boolean;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   createdAt: Date;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   updatedAt: Date;
 }
 

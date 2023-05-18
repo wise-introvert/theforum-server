@@ -3,7 +3,7 @@ import { Mutation, Resolver, Arg, Query } from "type-graphql";
 import { User, UserRegistrationInput, UserLoginInput } from ".";
 import * as UserService from "./service";
 
-@Resolver(User)
+@Resolver((_?: void | undefined) => User)
 export class UserResolver {
   @Query(() => String)
   health(): string {

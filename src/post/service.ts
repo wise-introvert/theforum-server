@@ -45,13 +45,16 @@ export const post = async (input: CreatePostInput): Promise<Post> => {
       const thread: Thread = await ThreadModel.create({
         genisis: post,
         forum: forum._id,
+        author,
       });
+      post.thread = thread._id;
       forum.threads.push(thread._id);
       author.threads.push(thread._id);
     }
 
     await UserModel.updateOne({ _id: author._id }, author);
     await ForumModel.updateOne({ _id: forum._id }, forum);
+    await PostModel.updateOne({ _id: post._id }, post);
 
     return post;
   } catch (err) {
@@ -65,4 +68,8 @@ export const post = async (input: CreatePostInput): Promise<Post> => {
   }
 };
 
-export const posts = async (): Promise<Post[]> => PostModel.find();
+export const posts = async (): Promise<Post[]> =>
+  PostModel.find()
+    .sort({ updatedAt: "desc" })
+    .limit(10)
+    .populate(["createdAt", "author", "thread", "parentPost"]);

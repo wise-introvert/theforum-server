@@ -11,7 +11,7 @@ import {
 } from ".";
 import { User, UserModel } from "../user";
 
-export const forums = async () => ForumModel.find();
+export const forums = async () => ForumModel.find().populate(["threads"]);
 
 export const forum = async (input: CreateForumInput): Promise<Forum> => {
   try {
@@ -52,4 +52,10 @@ export const forum = async (input: CreateForumInput): Promise<Forum> => {
       )
     );
   }
+};
+
+export const findForum = async (id: string): Promise<Forum | null> => {
+  return ForumModel.findOne({ _id: new Types.ObjectId(id) }).populate([
+    "threads",
+  ]);
 };

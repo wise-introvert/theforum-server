@@ -1,19 +1,17 @@
-import { prop, getModelForClass, Ref, plugin } from "@typegoose/typegoose";
+import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import { ObjectType, Field, ID } from "type-graphql";
-import populate from "mongoose-autopopulate";
 
 import { User } from "../user";
 import { Post } from "../post";
 import { Forum } from "../forum";
 
 @ObjectType()
-@plugin(populate)
 export class Thread {
   @Field(() => ID)
   _id: string;
 
   @Field(() => User)
-  @prop({ ref: () => "User", autopopulate: true })
+  @prop({ ref: () => "User" })
   author: Ref<User>;
 
   @Field(() => [Post])
@@ -21,11 +19,11 @@ export class Thread {
   children: Array<Ref<Post>>;
 
   @Field(() => Post)
-  @prop({ ref: () => "Post", autopopulate: true })
+  @prop({ ref: () => "Post" })
   genisis: Ref<Post>;
 
   @Field(() => Forum)
-  @prop({ ref: () => "Forum", autopopulate: true })
+  @prop({ ref: () => "Forum" })
   forum: Ref<Forum>;
 
   @Field(() => Date)
