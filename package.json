@@ -7,7 +7,7 @@
     "clean": "yarn rimraf dist",
     "compile": "tsc",
     "start": "yarn clean && yarn compile && node ./dist/index.js",
-    "start:dev": "yarn nodemon"
+    "dev": "yarn nodemon"
   },
   "dependencies": {
     "@apollo/server": "^4.6.0",
@@ -15,6 +15,7 @@
     "bcrypt": "^5.1.0",
     "class-validator": "^0.14.0",
     "graphql": "^16.6.0",
+    "lodash": "^4.17.21",
     "lodash.get": "^4.4.2",
     "lodash.isempty": "^4.4.0",
     "lodash.omit": "^4.5.0",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/lodash": "^4.14.194",
     "@types/lodash.get": "^4.4.7",
     "@types/lodash.isempty": "^4.4.7",
     "@types/lodash.omit": "^4.5.7",
