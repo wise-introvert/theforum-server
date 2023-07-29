@@ -37,7 +37,6 @@ export const post = async (input: CreatePostInput): Promise<Post> => {
       forum,
     });
 
-    author.posts?.push(post._id);
     forum.posts?.push(post._id);
 
     if (get(post, "genisis")) {
@@ -49,7 +48,6 @@ export const post = async (input: CreatePostInput): Promise<Post> => {
       });
       post.thread = thread._id;
       forum.threads.push(thread._id);
-      author.threads.push(thread._id);
     }
 
     await UserModel.updateOne({ _id: author._id }, author);

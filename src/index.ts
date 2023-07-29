@@ -65,7 +65,7 @@ const main = async () => {
     process.env.NODE_ENV == "production"
       ? `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.r7uptes.mongodb.net/?retryWrites=true&w=majority`
       : `mongodb://127.0.0.1:27017/sif?readPreference=primary&appname=MongoDB%20Compass&ssl=false`,
-    { dbName: "reddit4" }
+    { dbName: "sif" }
   )
     .then(
       (): Promise<{ url: string }> =>

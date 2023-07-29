@@ -1,17 +1,14 @@
-import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
+import { prop, getModelForClass } from "@typegoose/typegoose";
+import { Types } from "mongoose";
 import { ObjectType, Field, ID } from "type-graphql";
-
-import { Forum } from "../forum";
-import { Post } from "../post";
-import { Thread } from "../thread";
 
 @ObjectType()
 export class User {
   @Field(() => ID)
-  _id: string;
+  _id: Types.ObjectId;
 
   @Field()
-  @prop({ unique: true, nullable: false })
+  @prop({ nullable: false })
   username: string;
 
   @Field()
@@ -19,24 +16,29 @@ export class User {
   password: string;
 
   @Field()
+  @prop({ nullable: false })
+  email: string;
+
+  @Field()
+  @prop({ nullable: false })
+  hash: string;
+
+  @Field()
   @prop({ nullable: true, default: "" })
   description: string;
-
-  @Field(() => [Forum])
-  @prop({ default: [], ref: () => Forum })
-  forums: Array<Ref<Forum>>;
-
-  @Field(() => [Thread])
-  @prop({ default: [], ref: () => Thread })
-  threads: Array<Ref<Thread>>;
-
-  @Field(() => [Post])
-  @prop({ default: [], ref: () => Post })
-  posts: Array<Ref<Post>>;
 
   @Field()
   @prop({ nullable: true })
   avatar: string;
+
+  @Field(() => Date)
+  lastActive: Date;
+
+  @Field()
+  isArchived: boolean;
+
+  @Field()
+  isVerified: boolean;
 
   @Field(() => Date)
   createdAt: Date;

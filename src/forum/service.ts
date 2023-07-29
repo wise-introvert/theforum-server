@@ -38,8 +38,6 @@ export const forum = async (input: CreateForumInput): Promise<Forum> => {
       author,
     });
 
-    author.forums?.push(forum._id);
-
     await UserModel.updateOne({ _id: author._id }, author);
 
     return forum;

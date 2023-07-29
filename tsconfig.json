@@ -26,6 +26,8 @@
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*"]
-    }
+    },
+    "types": ["node", "jest"],
+    "typeRoots": ["./node_modules/@types"]
   }
 }
