@@ -15,6 +15,10 @@ export class Forum {
   title!: string;
 
   @Field()
+  @prop()
+  hash!: string;
+
+  @Field()
   @prop({ nullable: true, default: "" })
   description!: string;
 
@@ -27,11 +31,9 @@ export class Forum {
   author: Ref<User>;
 
   @Field(() => [Post])
-  @prop({ ref: () => "Post", default: [] })
   posts: Array<Ref<Post>>;
 
   @Field(() => [Thread])
-  @prop({ ref: () => "Thread", default: [] })
   threads: Array<Ref<Thread>>;
 
   @Field(() => Date)
